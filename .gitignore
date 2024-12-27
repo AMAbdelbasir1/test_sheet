@@ -1,0 +1,4 @@
+/node_modules
+u.db.sql
+.env
+package-lock.json
