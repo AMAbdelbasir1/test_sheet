@@ -57,22 +57,23 @@ exports.uploadSpreadsheet = async (req, res) => {
         }
       }
     }
-    deleteFile(filePath);
-    return res.status(200).json({
+    
+     res.status(200).json({
       message: "Spreadsheet processed successfully",
       status: "success",
       data: null,
     });
+    deleteFile(filePath);
   } catch (error) {
     console.error(error);
-    if (req.file) {
-      deleteFile(req.file.path);
-    }
     res.status(500).json({
       message: "Error processing spreadsheet",
       status: "error",
       data: null,
     });
+    if (req.file) {
+      deleteFile(req.file.path);
+    }
   }
 };
 
