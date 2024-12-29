@@ -6,7 +6,6 @@ const dataRoutes = require("./routes/dataRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const cors = require("cors");
 require("dotenv").config();
-const cors = require("cors");
 
 app.use(
   cors({
