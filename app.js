@@ -6,11 +6,16 @@ const dataRoutes = require("./routes/dataRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const cors = require("cors");
 require("dotenv").config();
-app.use(cors({
-    origin: "*",
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "http://localhost:3001", // Replace with your frontend's URL
     methods: ["POST", "GET"],
-    allowedHeaders: ["Content-Type"],
-}));
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
