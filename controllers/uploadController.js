@@ -16,7 +16,6 @@ exports.uploadSpreadsheet = async (req, res) => {
         .status(400)
         .json({ message: "No file uploaded", status: "error", data: null });
     }
-    console.log(req.file);
     // Parse the uploaded file
     const filePath = path.join(__dirname, "../uploads", req.file.filename);
     const workbook = xlsx.readFile(filePath);
@@ -52,10 +51,8 @@ exports.uploadSpreadsheet = async (req, res) => {
         // Insert or update item based on the sheet name
         if (isFoodSheet) {
           await insertOrUpdateFoodItem(row, subSubCategoryId);
-          console.log("finshed food item");
         } else {
           await insertOrUpdateNonFoodItem(row, subSubCategoryId);
-          console.log("finshed non food item");
         }
       }
     }

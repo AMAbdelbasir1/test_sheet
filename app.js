@@ -24,6 +24,10 @@ app.use("/api/export", exportRoutes);
 app.use("/api/data", dataRoutes);
 app.use("/api/categories", categoryRoutes);
 
-// Start server
-const PORT = 3000;
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+// Start server with custom timeout
+const server = app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
+
+// Set timeout to 10 minutes (600,000 milliseconds)
+server.timeout = 600000;
