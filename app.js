@@ -15,7 +15,8 @@ app.use(
       }
       const allowedOrigins = [
         "http://localhost:*",
-        "https://cloud-left-task-3g4mqcjub-hassanmostfas-projects.vercel.app/",
+        "https://cloud-left-task-3g4mqcjub-hassanmostfas-projects.vercel.app",
+        "https://cloud-left-task.vercel.app",
       ];
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
