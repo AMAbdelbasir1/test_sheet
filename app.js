@@ -1,41 +1,41 @@
 const express = require("express");
-const app = express();
+const cors = require("cors");
 const uploadRoutes = require("./routes/uploadRoutes");
 const exportRoutes = require("./routes/exportRoutes");
 const dataRoutes = require("./routes/dataRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
-const cors = require("cors");
 require("dotenv").config();
 
+const app = express();
+
+// CORS configuration
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || process.env.NODE_ENV === "development") {
-        return callback(null, true);
-      }
       const allowedOrigins = [
-        "http://localhost:*",
+        "http://localhost:3001",
         "https://cloud-left-task-3g4mqcjub-hassanmostfas-projects.vercel.app",
         "https://cloud-left-task.vercel.app",
-        "https://cloud-left-task.vercel.app",
       ];
-      console.log(origin);
-      console.log(allowedOrigins.includes(origin));
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
+
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
       }
-      return callback(new Error("Not allowed by CORS"));
     },
     methods: ["POST", "GET"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Increase payload size limit
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
 // Static directory for frontend
 app.use(express.static("public"));
+
 // Routes
 app.use("/api/upload", uploadRoutes);
 app.use("/api/export", exportRoutes);
