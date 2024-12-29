@@ -9,7 +9,19 @@ require("dotenv").config();
 
 app.use(
   cors({
-    origin: ["*", "http://localhost:*"], // Replace with your frontend's URL
+    origin: (origin, callback) => {
+      if (!origin || process.env.NODE_ENV === "development") {
+        return callback(null, true);
+      }
+      const allowedOrigins = [
+        "http://localhost:*",
+        "https://cloud-left-task-3g4mqcjub-hassanmostfas-projects.vercel.app/",
+      ];
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
     methods: ["POST", "GET"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
