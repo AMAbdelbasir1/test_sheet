@@ -31,6 +31,17 @@ exports.uploadSpreadsheet = async (req, res) => {
       const type = isFoodSheet ? "Food" : "Non Food";
 
       for (const row of data) {
+        // skip row if not found barcode and En Categorie 1 and Ar Categorie 1
+        if (
+          !row["sku-ERP"] ||
+          !row["En Categorie 1"] ||
+          !row["Ar Categorie 1"] ||
+          !row["Barcode"] ||
+          !row["Name-EN"] ||
+          !row["Name-AR"]
+        ) {
+          continue;
+        }
         // Create or find the hierarchical categories
         const mainCategoryId = await getOrCreateMainCategory(
           row["En Categorie 1"],

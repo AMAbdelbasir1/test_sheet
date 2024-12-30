@@ -8,8 +8,8 @@ const fs = require("fs");
 exports.exportDataToSpreadsheet = async (req, res) => {
   try {
     // Fetch data
-    const foodData = await getAllFoodData();
-    const nonFoodData = await getAllNonFoodData();
+    const foodData = await getAllFoodData({});
+    const nonFoodData = await getAllNonFoodData({});
 
     // Create a new workbook
     const workbook = xlsx.utils.book_new();
@@ -48,7 +48,7 @@ exports.exportDataToSpreadsheet = async (req, res) => {
 
 const removeBaseCodeAndSuffix = (data) => {
   return data.map((item) => {
-    const { BaseBarcode, Barcode_Suffix, ...rest } = item;
+    const { BaseBarcode, Barcode_Suffix, NameEn, NameAr, ...rest } = item;
     return rest;
   });
 };

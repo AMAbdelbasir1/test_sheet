@@ -12,7 +12,7 @@ const { insertNonFoodItem } = require("../models/nonFoodQueries");
 // Endpoint for fetching food data
 exports.getFoodData = async (req, res) => {
   try {
-    const data = await getAllFoodData();
+    const data = await getAllFoodData(req.query);
     res.status(200).json({
       message: "Data fetched successfully",
       status: "success",
@@ -27,7 +27,7 @@ exports.getFoodData = async (req, res) => {
 // Endpoint for fetching non-food data
 exports.getNonFoodData = async (req, res) => {
   try {
-    const data = await getAllNonFoodData();
+    const data = await getAllNonFoodData(req.query);
     res.status(200).json({
       message: "Data fetched successfully",
       status: "success",
@@ -48,14 +48,13 @@ exports.addItems = async (req, res) => {
     const subSubCategory = await checkFoundCategoriesAndInsert(data);
     if (data.item_type === "Food") {
       await insertFoodItem(data, subSubCategory);
-      console.log("end");
     } else {
       await insertNonFoodItem(data, subSubCategory);
     }
     res.status(200).json({ message: "Items added successfully." });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error fetching non-food data." });
+    res.status(500).json({ error: "Error adding items." });
   }
 };
 
@@ -90,7 +89,7 @@ const checkFoundCategoriesAndInsert = async (data) => {
 
 const removeBaseCodeAndSuffix = (data) => {
   return data.map((item) => {
-    const { BaseBarcode, Barcode_Suffix, ...rest } = item;
+    const { BaseBarcode, Barcode_Suffix, NameEn, NameAr, ...rest } = item;
     return rest;
   });
 };
