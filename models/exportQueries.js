@@ -12,7 +12,8 @@ exports.getAllFoodData = async (filters) => {
     params.push(`%${brand}%`);
   }
   if (name) {
-    whereClause += " AND (NameEn LIKE ? OR NameAr LIKE ?)";
+    whereClause +=
+      " AND ( LOWER(NameEn) LIKE LOWER(?) OR LOWER(NameAr) LIKE LOWER(?))";
     params.push(`%${name}%`, `%${name}%`);
   }
   if (barcode) {
@@ -158,7 +159,8 @@ exports.getAllNonFoodData = async (filters) => {
     params.push(`%${brand}%`);
   }
   if (name) {
-    whereClause += " AND (NameEn LIKE ? OR NameAr LIKE ?)";
+    whereClause +=
+      " AND (LOWER(NameEn) LIKE LOWER(?) OR LOWER(NameAr) LIKE LOWER(?))";
     params.push(`%${name}%`, `%${name}%`);
   }
   if (barcode) {
